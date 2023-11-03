@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectSemantic3", "ProjectSemantic3\ProjectSemantic3.csproj", "{2EA49979-F1AA-4B14-BD9D-767223258622}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectSemantic3", "ProjectSemantic3\ProjectSemantic3.csproj", "{2EA49979-F1AA-4B14-BD9D-767223258622}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectSemantic3Web", "ProjectSemantic3Web\ProjectSemantic3Web.csproj", "{F344A227-724C-4A16-9278-693B1C47192F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{2EA49979-F1AA-4B14-BD9D-767223258622}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EA49979-F1AA-4B14-BD9D-767223258622}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EA49979-F1AA-4B14-BD9D-767223258622}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F344A227-724C-4A16-9278-693B1C47192F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F344A227-724C-4A16-9278-693B1C47192F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F344A227-724C-4A16-9278-693B1C47192F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F344A227-724C-4A16-9278-693B1C47192F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
