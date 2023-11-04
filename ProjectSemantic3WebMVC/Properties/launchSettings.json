@@ -3,16 +3,16 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:21920",
+      "applicationUrl": "http://localhost:18906",
       "sslPort": 0
     }
   },
   "profiles": {
-    "ProjectSemantic3Web": {
+    "ProjectSemantic3WebMVC": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:5012",
+      "applicationUrl": "http://localhost:5262",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

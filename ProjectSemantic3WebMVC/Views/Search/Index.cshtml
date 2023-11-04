@@ -1,0 +1,65 @@
+﻿@model SearchModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<head>
+    <style>
+
+        h2 {
+            color: black;
+            text-align: center;
+            font-family: Georgia, 'Times New Roman', Times, serif
+        }
+
+        #search-bar   { 
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 550px;
+            border-radius: 50px;
+            height: 40px;
+            border: 1px solid #dddddd;
+            outline: none;
+            padding-left: 40px;
+        }
+
+        input:hover  {
+            box-shadow: 0px 1px 3px rgb(192, 185, 185);
+        }
+
+        .buttons   {
+            padding: 10px 20px 10px 20px;
+            border-radius: 4px;
+            border: none;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <br />
+    <br />
+    <br />
+    <center>
+        <img src="images/KNU_LOGO.png" alt="KNU LOGO" width="300" height="300" />
+    </center>
+    <br />
+    <br />
+    <br />
+   
+    <div class="container">
+        <form method="post" asp-controller="Search" asp-action="StartSearching">
+        <h2>Выпускники учебного заведения</h2> 
+        <input asp-for="Input" id="search-bar" type="text" />
+        <button class="buttons">Поиск</button>
+    </form>
+    </div>
+</body>
