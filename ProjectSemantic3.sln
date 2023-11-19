@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectSemantic3WebMVC", "ProjectSemantic3WebMVC\ProjectSemantic3WebMVC.csproj", "{EB26091D-D87B-4A6C-BAF8-EED83A517385}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBPediaSPARQLEndpointQuery", "DBPediaSPARQLEndpointQuery\DBPediaSPARQLEndpointQuery.csproj", "{424B3487-283D-4DDD-8060-5D65DCE4D1BA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{EB26091D-D87B-4A6C-BAF8-EED83A517385}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB26091D-D87B-4A6C-BAF8-EED83A517385}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB26091D-D87B-4A6C-BAF8-EED83A517385}.Release|Any CPU.Build.0 = Release|Any CPU
+		{424B3487-283D-4DDD-8060-5D65DCE4D1BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{424B3487-283D-4DDD-8060-5D65DCE4D1BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{424B3487-283D-4DDD-8060-5D65DCE4D1BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{424B3487-283D-4DDD-8060-5D65DCE4D1BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
