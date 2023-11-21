@@ -23,7 +23,7 @@ namespace DBPediaSPARQLEndpointQuery
         {
             model = new List<PersonModel>();
             var rset = SendQuery(
-                "SELECT DISTINCT ?name ?birthDate GROUP_CONCAT((?birthPlace); SEPARATOR=\"+\")  AS ?birthPlace   GROUP_CONCAT((?occupationName); SEPARATOR=\"+\")  AS ?occupation ?abstract GROUP_CONCAT((?awardName ); SEPARATOR=\"+\") AS ?award   GROUP_CONCAT((?officeName); SEPARATOR=\"+\") AS ?office  GROUP_CONCAT((?knownForName); SEPARATOR=\"+\") AS ?knownFor\r\nWHERE\r\n{\r\n?n a dbo:Person.\r\n    ?n dbo:almaMater dbr:Taras_Shevchenko_National_University_of_Kyiv.\r\n    ?n rdfs:label  ?name.\r\n  FILTER(REGEX(?name, \"" + name + "\",\"i\"))\r\nFILTER langMatches( lang(?name), \"uk\" )\r\n    ?n dbo:abstract ?abstract.\r\n\tFILTER langMatches( lang(?abstract), \"uk\" )\r\n\t?n dbo:birthDate ?birthDate.\r\n\t?n dbo:birthPlace ?birthP.\r\n\t?birthP rdfs:label ?birthPlace.\r\n\tFILTER langMatches( lang(?birthPlace), \"uk\" ) \r\nOPTIONAL\r\n{\r\n?n dbo:award ?award.\r\n?award rdfs:label ?awardName.\r\nFILTER langMatches( lang(?awardName), \"uk\" )\r\n}.\r\nOPTIONAL\r\n{\r\n?n dbp:office ?office.\r\n?office rdfs:label ?officeName.\r\nFILTER langMatches( lang(?officeName), \"uk\" )\r\n}.\r\nOPTIONAL\r\n{\r\n?n dbp:knownFor ?knownFor.\r\n?knownFor rdfs:label ?knownForName.\r\nFILTER langMatches( lang(?knownForName), \"uk\" )\r\n}.\r\nOPTIONAL\r\n{\r\n?n dbp:occupation ?occupation.\r\n?occupation rdfs:label ?occupationName.\r\nFILTER langMatches( lang(?occupationName), \"uk\" )\r\n}.\r\n}"
+                "SELECT DISTINCT ?name ?img ?birthDate GROUP_CONCAT((?birthPlace); SEPARATOR=\"+\")  AS ?birthPlace   GROUP_CONCAT((?occupationName); SEPARATOR=\"+\")  AS ?occupation ?abstract GROUP_CONCAT((?awardName ); SEPARATOR=\"+\") AS ?award   GROUP_CONCAT((?officeName); SEPARATOR=\"+\") AS ?office  GROUP_CONCAT((?knownForName); SEPARATOR=\"+\") AS ?knownFor\r\nWHERE\r\n{\r\n?n a dbo:Person.\r\n    ?n dbo:almaMater dbr:Taras_Shevchenko_National_University_of_Kyiv.\r\n  ?n dbo:thumbnail ?img  ?n rdfs:label  ?name.\r\n  FILTER(REGEX(?name, \"" + name + "\",\"i\"))\r\nFILTER langMatches( lang(?name), \"uk\" )\r\n    ?n dbo:abstract ?abstract.\r\n\tFILTER langMatches( lang(?abstract), \"uk\" )\r\n\t?n dbo:birthDate ?birthDate.\r\n\t?n dbo:birthPlace ?birthP.\r\n\t?birthP rdfs:label ?birthPlace.\r\n\tFILTER langMatches( lang(?birthPlace), \"uk\" ) \r\nOPTIONAL\r\n{\r\n?n dbo:award ?award.\r\n?award rdfs:label ?awardName.\r\nFILTER langMatches( lang(?awardName), \"uk\" )\r\n}.\r\nOPTIONAL\r\n{\r\n?n dbp:office ?office.\r\n?office rdfs:label ?officeName.\r\nFILTER langMatches( lang(?officeName), \"uk\" )\r\n}.\r\nOPTIONAL\r\n{\r\n?n dbp:knownFor ?knownFor.\r\n?knownFor rdfs:label ?knownForName.\r\nFILTER langMatches( lang(?knownForName), \"uk\" )\r\n}.\r\nOPTIONAL\r\n{\r\n?n dbp:occupation ?occupation.\r\n?occupation rdfs:label ?occupationName.\r\nFILTER langMatches( lang(?occupationName), \"uk\" )\r\n}.\r\n}"
                 );
             if (rset.Count > 0)
             {
@@ -39,6 +39,10 @@ namespace DBPediaSPARQLEndpointQuery
 
         public static SparqlResultSet SendQuery(string query) 
         {
+            if (query.Length == 0)
+                throw new ArgumentException("Query string can't be empty.");
+            else if (query == null)
+                return null;
             var result = new SparqlResultSet();
             try
             {
@@ -47,22 +51,23 @@ namespace DBPediaSPARQLEndpointQuery
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine(ex.InnerException.Message.ToString());
             }
             return result;
         }
 
-        static List<string> GetUniqueStrings(string info)
+        public static List<string> GetUniqueStrings(string info)
         {
             var input = info.Split('+').ToList();
             List<string> uniqueList = input.Distinct().ToList();
             return uniqueList;
         }
 
-        static string ConcatStrings(List<string> list)
+        public static string ConcatStrings(List<string> list)
         {
             string info = string.Empty;
+            if (list.Count == 1) 
+                return info += list[0];
             for (int i = 0; i < list.Count - 1; i++)
             {
                 info += list[i] + ", ";
@@ -70,7 +75,7 @@ namespace DBPediaSPARQLEndpointQuery
             return info += list[list.Count - 1];
         }
 
-        static PersonModel FromRDFToPersonModel(ISparqlResult item) 
+        public static PersonModel FromRDFToPersonModel(ISparqlResult item) 
         {
             var person = new List<string>();
             for (int i = 0; i < item.Count; i++)
