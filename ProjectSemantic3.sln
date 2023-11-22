@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectSemantic3WebMVC", "ProjectSemantic3WebMVC\ProjectSemantic3WebMVC.csproj", "{EB26091D-D87B-4A6C-BAF8-EED83A517385}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBPediaSPARQLEndpointQuery", "DBPediaSPARQLEndpointQuery\DBPediaSPARQLEndpointQuery.csproj", "{424B3487-283D-4DDD-8060-5D65DCE4D1BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenLinkedDataLibrary", "DBPediaSPARQLEndpointQuery\OpenLinkedDataLibrary.csproj", "{424B3487-283D-4DDD-8060-5D65DCE4D1BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DBPediaSPARQLEndpointQuery\DBPediaSPARQLEndpointQuery.csproj" />
+    <ProjectReference Include="..\DBPediaSPARQLEndpointQuery\OpenLinkedDataLibrary.csproj" />
   </ItemGroup>
 
 </Project>

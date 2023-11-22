@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DBPediaSPARQLEndpointQuery
+namespace OpenLinkedDataLibrary.DBPedia
 {
-    public class PersonModel
+    public class DBPediaPersonModel
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -21,9 +21,9 @@ namespace DBPediaSPARQLEndpointQuery
         public string Img { get; set; }
 
 
-        public PersonModel()
+        public DBPediaPersonModel()
         {
-            
+
         }
     }
 }

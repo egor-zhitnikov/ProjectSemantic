@@ -1,14 +1,15 @@
 ﻿using AngleSharp.Common;
+using DBPediaSPARQLEndpointQuery;
 using System.Text.RegularExpressions;
 using VDS.RDF.Query;
 
-namespace DBPediaSPARQLEndpointQuery
+namespace OpenLinkedDataLibrary.DBPedia
 {
-    public class Queries
+    public class DBPediaPersonQueries
     {
-        public static List<PersonModel> GetAll()
+        public static List<DBPediaPersonModel> GetAll()
         {
-            var result = new List<PersonModel>();
+            var result = new List<DBPediaPersonModel>();
             var dataset = SendQuery(
                 "SELECT DISTINCT ?name ?img ?birthDate GROUP_CONCAT((?birthPlace); SEPARATOR=\"+\")  AS ?birthPlace     GROUP_CONCAT((?occupationName); SEPARATOR=\"+\")  AS ?occupation ?abstract GROUP_CONCAT((?awardName ); SEPARATOR=\"+\") AS ?award   GROUP_CONCAT((?officeName); SEPARATOR=\"+\") AS ?office  GROUP_CONCAT((?knownForName); SEPARATOR=\"+\") AS ?knownFor\r\nWHERE\r\n{\r\n?n a dbo:Person.\r\n?n dbo:thumbnail ?img.\r\n    ?n dbo:almaMater dbr:Taras_Shevchenko_National_University_of_Kyiv.\r\n    ?n rdfs:label ?name.\r\n\tFILTER langMatches( lang(?name), \"uk\" )\r\n    ?n dbo:abstract ?abstract.\r\n\tFILTER langMatches( lang(?abstract), \"uk\" )\r\n\t?n dbo:birthDate ?birthDate.\r\n\t?n dbo:birthPlace ?birthP.\r\n\t?birthP rdfs:label ?birthPlace.\r\n\tFILTER langMatches( lang(?birthPlace), \"uk\" ) \r\n\r\n OPTIONAL\r\n  {\r\n  ?n dbo:academicDiscipline ?academicDiscipline.\r\n  ?academicDiscipline rdfs:label ?academicDisciplineName.\r\n  FILTER langMatches( lang(?academicDisciplineName), \"uk\" )\r\n  }.\r\n   \r\nOPTIONAL{\r\n?n dbo:award ?award.\r\n?award rdfs:label ?awardName.\r\nFILTER langMatches( lang(?awardName), \"uk\" )\r\n}.\r\nOPTIONAL\r\n{\r\n?n dbp:office ?office.\r\n?office rdfs:label ?officeName.\r\nFILTER langMatches( lang(?officeName), \"uk\" )\r\n}.\r\nOPTIONAL\r\n{\r\n?n dbp:knownFor ?knownFor.\r\n?knownFor rdfs:label ?knownForName.\r\nFILTER langMatches( lang(?knownForName), \"uk\" )\r\n}.\r\n}"
                 );
@@ -19,13 +20,13 @@ namespace DBPediaSPARQLEndpointQuery
             return result;
         }
 
-        public static SearchStatusEnum SearchByName(string name, out List<PersonModel> model)
+        public static SearchStatusEnum GetPersonByName(string name, out List<DBPediaPersonModel> model)
         {
-            model = new List<PersonModel>();
+            model = new List<DBPediaPersonModel>();
             var rset = GetAll();
 
-            model = rset.Where(X=>Regex.IsMatch(X.Name,name)).ToList();
-            if(model.Count!=0)
+            model = rset.Where(X => Regex.IsMatch(X.Name, name)).ToList();
+            if (model.Count != 0)
                 return SearchStatusEnum.Success;
             return SearchStatusEnum.No_matches;
         }
@@ -68,7 +69,7 @@ namespace DBPediaSPARQLEndpointQuery
             return info += list[list.Count - 1];
         }
 
-        public static PersonModel FromRDFToPersonModel(ISparqlResult item)
+        public static DBPediaPersonModel FromRDFToPersonModel(ISparqlResult item)
         {
             var person = new List<string>();
             for (int i = 0; i < item.Count; i++)
@@ -79,7 +80,7 @@ namespace DBPediaSPARQLEndpointQuery
                 if (f == null) a.TryGetValue("Uri", out f);
                 person.Add(f);
             }
-            var model = new PersonModel();
+            var model = new DBPediaPersonModel();
             model.Name = person[0];
             model.Img = person[1];
             model.BirthDate = person[2];

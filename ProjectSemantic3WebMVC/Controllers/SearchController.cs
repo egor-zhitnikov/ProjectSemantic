@@ -1,5 +1,5 @@
-﻿using DBPediaSPARQLEndpointQuery;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using OpenLinkedDataLibrary.DBPedia;
 using ProjectSemantic3WebMVC.Models;
 
 namespace ProjectSemantic3WebMVC.Controllers
@@ -15,7 +15,7 @@ namespace ProjectSemantic3WebMVC.Controllers
         public IActionResult StartSearching(SearchModel sm) // todo: Вести поиск по базе данных и выводить нужный профиль на экран, либо ошибку
         {
             string input = sm.Input;
-            var model = Queries.SearchByName(input, out var res); //new PersonModel() { Name };
+            var model = DBPediaPersonQueries.GetPersonByName(input, out var res); //new PersonModel() { Name };
 
             if (res.Count != 0)
             {
