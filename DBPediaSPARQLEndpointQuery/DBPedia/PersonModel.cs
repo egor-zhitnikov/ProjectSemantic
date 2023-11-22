@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace OpenLinkedDataLibrary.DBPedia
 {
-    public class DBPediaPersonModel
+    public class PersonModel
     {
         public string Name { get; set; }
         public string Description { get; set; }
         public string BirthDate { get; set; }
         public string BirthPlace { get; set; }
-        public string AcademicDiscipline { get; set; }
+        public string AcademicDegree { get; set; }
         public string Occupation { get; set; }
         public string Awards { get; set; }
 
@@ -20,8 +20,14 @@ namespace OpenLinkedDataLibrary.DBPedia
         public string KnownFor { get; set; }
         public string Img { get; set; }
 
-
-        public DBPediaPersonModel()
+        public string NominatedFor { get; set; }
+        public string NotableWork { get; set; }
+        public string AcademicThesis { get; set; }
+        public string OwnerOf { get; set; }
+        public string MemberOf { get; set; }
+        public string PositionHeld { get; set; }
+        public string ParticipantIn { get; set; }
+        public PersonModel()
         {
 
         }

@@ -7,9 +7,9 @@ namespace OpenLinkedDataLibrary.DBPedia
 {
     public class DBPediaPersonQueries
     {
-        public static List<DBPediaPersonModel> GetAll()
+        public static List<PersonModel> GetAll()
         {
-            var result = new List<DBPediaPersonModel>();
+            var result = new List<PersonModel>();
             var dataset = SendQuery(
                 "SELECT DISTINCT ?name ?img ?birthDate GROUP_CONCAT((?birthPlace); SEPARATOR=\"+\")  AS ?birthPlace     GROUP_CONCAT((?occupationName); SEPARATOR=\"+\")  AS ?occupation ?abstract GROUP_CONCAT((?awardName ); SEPARATOR=\"+\") AS ?award   GROUP_CONCAT((?officeName); SEPARATOR=\"+\") AS ?office  GROUP_CONCAT((?knownForName); SEPARATOR=\"+\") AS ?knownFor\r\nWHERE\r\n{\r\n?n a dbo:Person.\r\n?n dbo:thumbnail ?img.\r\n    ?n dbo:almaMater dbr:Taras_Shevchenko_National_University_of_Kyiv.\r\n    ?n rdfs:label ?name.\r\n\tFILTER langMatches( lang(?name), \"uk\" )\r\n    ?n dbo:abstract ?abstract.\r\n\tFILTER langMatches( lang(?abstract), \"uk\" )\r\n\t?n dbo:birthDate ?birthDate.\r\n\t?n dbo:birthPlace ?birthP.\r\n\t?birthP rdfs:label ?birthPlace.\r\n\tFILTER langMatches( lang(?birthPlace), \"uk\" ) \r\n\r\n OPTIONAL\r\n  {\r\n  ?n dbo:academicDiscipline ?academicDiscipline.\r\n  ?academicDiscipline rdfs:label ?academicDisciplineName.\r\n  FILTER langMatches( lang(?academicDisciplineName), \"uk\" )\r\n  }.\r\n   \r\nOPTIONAL{\r\n?n dbo:award ?award.\r\n?award rdfs:label ?awardName.\r\nFILTER langMatches( lang(?awardName), \"uk\" )\r\n}.\r\nOPTIONAL\r\n{\r\n?n dbp:office ?office.\r\n?office rdfs:label ?officeName.\r\nFILTER langMatches( lang(?officeName), \"uk\" )\r\n}.\r\nOPTIONAL\r\n{\r\n?n dbp:knownFor ?knownFor.\r\n?knownFor rdfs:label ?knownForName.\r\nFILTER langMatches( lang(?knownForName), \"uk\" )\r\n}.\r\n}"
                 );
@@ -20,9 +20,9 @@ namespace OpenLinkedDataLibrary.DBPedia
             return result;
         }
 
-        public static SearchStatusEnum GetPersonByName(string name, out List<DBPediaPersonModel> model)
+        public static SearchStatusEnum GetPersonByName(string name, out List<PersonModel> model)
         {
-            model = new List<DBPediaPersonModel>();
+            model = new List<PersonModel>();
             var rset = GetAll();
 
             model = rset.Where(X => Regex.IsMatch(X.Name, name)).ToList();
@@ -69,7 +69,7 @@ namespace OpenLinkedDataLibrary.DBPedia
             return info += list[list.Count - 1];
         }
 
-        public static DBPediaPersonModel FromRDFToPersonModel(ISparqlResult item)
+        public static PersonModel FromRDFToPersonModel(ISparqlResult item)
         {
             var person = new List<string>();
             for (int i = 0; i < item.Count; i++)
@@ -78,9 +78,10 @@ namespace OpenLinkedDataLibrary.DBPedia
                 string f = string.Empty;
                 a.TryGetValue("Value", out f);
                 if (f == null) a.TryGetValue("Uri", out f);
+                if (string.IsNullOrEmpty(f)) f = "N/A";
                 person.Add(f);
             }
-            var model = new DBPediaPersonModel();
+            var model = new PersonModel();
             model.Name = person[0];
             model.Img = person[1];
             model.BirthDate = person[2];
