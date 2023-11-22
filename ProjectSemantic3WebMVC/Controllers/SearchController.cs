@@ -15,7 +15,7 @@ namespace ProjectSemantic3WebMVC.Controllers
 
         public async Task<IActionResult> Results(string input)
         {
-            List<DBPediaPersonModel> models = null; // Загородній Юрій Іванович
+            List<PersonModel> models = null; // Загородній Юрій Іванович
 
             if (string.IsNullOrEmpty(input))
             {

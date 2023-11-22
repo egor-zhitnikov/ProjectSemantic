@@ -5,7 +5,7 @@ namespace ProjectSemantic3WebMVC.Controllers
 {
     public class PersonController : Controller
     {
-        public IActionResult Index(DBPediaPersonModel model)
+        public IActionResult Index(PersonModel model)
         {
             return View(model);
         }
