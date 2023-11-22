@@ -1,5 +1,5 @@
-﻿using DBPediaSPARQLEndpointQuery;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using OpenLinkedDataLibrary.DBPedia;
 using ProjectSemantic3WebMVC.Models;
 
 namespace ProjectSemantic3WebMVC.Controllers
@@ -15,7 +15,7 @@ namespace ProjectSemantic3WebMVC.Controllers
 
         public async Task<IActionResult> Results(string input)
         {
-            List<PersonModel> models = null; // Загородній Юрій Іванович
+            List<DBPediaPersonModel> models = null; // Загородній Юрій Іванович
 
             if (string.IsNullOrEmpty(input))
             {
@@ -24,7 +24,7 @@ namespace ProjectSemantic3WebMVC.Controllers
 
             await Task.Run(() =>
             {
-                Queries.SearchByName(input, out var m);
+                DBPediaPersonQueries.GetPersonByName(input, out var m);
                 // models = Queries.GetAll();
                 models = m;
             });
