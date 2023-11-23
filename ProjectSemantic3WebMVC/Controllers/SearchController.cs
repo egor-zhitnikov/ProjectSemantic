@@ -24,9 +24,10 @@ namespace ProjectSemantic3WebMVC.Controllers
 
             await Task.Run(() =>
             {
-                DBPediaPersonQueries.GetPersonByName(input, out var m);
+                //DBPediaPersonQueries.GetPersonByName(input, out var m);
                 // models = Queries.GetAll();
-                models = m;
+                models = OpenLinkedDataLibrary.Wikidata.WikidataPersonQueries.GetAll();
+                
             });
 
             if (models.Count > MAX_SEARCH_RESULTS)

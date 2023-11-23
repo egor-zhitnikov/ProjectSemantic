@@ -15,11 +15,9 @@ namespace OpenLinkedDataLibrary.DBPedia
         public string AcademicDegree { get; set; }
         public string Occupation { get; set; }
         public string Awards { get; set; }
-
         public string Office { get; set; }
         public string KnownFor { get; set; }
         public string Img { get; set; }
-
         public string NominatedFor { get; set; }
         public string NotableWork { get; set; }
         public string AcademicThesis { get; set; }
@@ -29,7 +27,7 @@ namespace OpenLinkedDataLibrary.DBPedia
         public string ParticipantIn { get; set; }
         public PersonModel()
         {
-
+           
         }
     }
 }
