@@ -1,4 +1,5 @@
 ﻿@using OpenLinkedDataLibrary.DBPedia;
+@using ProjectSemantic3WebMVC.Helpers;
 
 @model PersonModel
 
@@ -98,33 +99,46 @@ section {
                     <div class="card-body p-1-9 p-sm-2-3 p-md-6 p-lg-7">
                         <div class="row align-items-center">
                             <div class="col-lg-6 mb-4 mb-lg-0">
-                               
-                                <img width="315" height="315" src="@Model.Img" alt="...">
+
+                                @if (DataValidationHelper.IsValid(Model.Img))
+                                {
+                                    <img width="315" height="315" src="@Model.Img" alt="...">
+                                }
+                                else
+                                {
+                                    <img width="315" height="315" src="https://ang-projects.com/public/uploads/contents/no-image.png" alt="...">
+                                }
+
                             </div>
                             <div class="col-lg-6 px-xl-10">
                                 <div class="bg-secondary d-lg-inline-block py-1-9 px-1-9 px-sm-6 mb-1-9 rounded">
                                     <h3 class="h2 text-white mb-0">@Model.Name</h3>
-                                    <span class="text-primary">Студент Київського Національного Університету ім.Шевченка</span>
+                                    <span class="text-primary">Випускник Київського Національного Університету ім.Шевченка</span>
                                 </div>
                                 <ul class="list-unstyled mb-1-9">
-                                    <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Посада:</span> @Model.Office</li>
+                                    <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Посада:</span> @Model.PositionHeld, @Model.Office</li>
                                     <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Занятість:</span> @Model.Occupation </li>
                                     <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Дата народження:</span> @Model.BirthDate </li>
                                     <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Місце народження:</span> @Model.BirthPlace </li>
+                                    <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Вчена ступінь:</span> @Model.AcademicDegree</li>
                                 </ul>      
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-12 mb-4 mb-sm-5">
-                <div>
-                    <span class="section-title text-primary mb-3 mb-sm-4">ПРО ЛЮДИНУ</span>
-                    <p>@Model.Description</p>
+
+            @if (DataValidationHelper.IsValid(Model.Description))
+            {
+                <div class="col-lg-12 mb-4 mb-sm-5">
+                    <div>
+                        <span class="section-title text-primary mb-3 mb-sm-4">ПРО ЛЮДИНУ</span>
+                        <p>@Model.Description</p>
+                    </div>
                 </div>
-            </div>
-           
-            @if (Model.Awards != "N/A")
+            }
+
+            @if (DataValidationHelper.IsValid(Model.Awards))
             {
                 <div class="col-lg-12 mb-4 mb-sm-5">
                     <div>
@@ -134,7 +148,7 @@ section {
                 </div>
             }
 
-            @if (Model.KnownFor != "N/A")
+            @if (DataValidationHelper.IsValid(Model.KnownFor))
             {
                 <div class="col-lg-12 mb-4 mb-sm-5">
                     <div>
@@ -143,6 +157,56 @@ section {
                 </div>
                 </div>
             }
+
+            @if (DataValidationHelper.IsValid(Model.OwnerOf))
+            {
+                <div class="col-lg-12 mb-4 mb-sm-5">
+                    <div>
+                        <span class="section-title text-primary mb-3 mb-sm-4">ВЛАСНИК</span>
+                        <p>@Model.OwnerOf</p>
+                    </div>
+                </div>
+            }
+
+            @if (DataValidationHelper.IsValid(Model.AcademicThesis))
+            {
+                <div class="col-lg-12 mb-4 mb-sm-5">
+                    <div>
+                        <span class="section-title text-primary mb-3 mb-sm-4">АКАДЕМІЧНІ ТЕЗИ</span>
+                        <p>@Model.AcademicThesis</p>
+                    </div>
+                </div>
+            }
+
+            @if (DataValidationHelper.IsValid(Model.NominatedFor))
+            {
+                <div class="col-lg-12 mb-4 mb-sm-5">
+                    <div>
+                        <span class="section-title text-primary mb-3 mb-sm-4">НОМІНАЦІЇ</span>
+                        <p>@Model.NominatedFor</p>
+                    </div>
+                </div>
+            }
+
+            @if (DataValidationHelper.IsValid(Model.NotableWork))
+            {
+                <div class="col-lg-12 mb-4 mb-sm-5">
+                    <div>
+                        <span class="section-title text-primary mb-3 mb-sm-4">ВИЗНАЧНА РОБОТА</span>
+                        <p>@Model.NotableWork</p>
+                    </div>
+                </div>
+            }
+
+            @if (DataValidationHelper.IsValid(Model.MemberOf))
+            {
+                <div class="col-lg-12 mb-4 mb-sm-5">
+                    <div>
+                        <span class="section-title text-primary mb-3 mb-sm-4">ЧЛЕНСТВО</span>
+                        <p>@Model.MemberOf</p>
+                    </div>
+                </div>
+            } 
         </div>
     </div>
 </section>

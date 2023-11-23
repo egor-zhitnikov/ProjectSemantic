@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OpenLinkedDataLibrary;
 using OpenLinkedDataLibrary.DBPedia;
+using OpenLinkedDataLibrary.Filter;
 using ProjectSemantic3WebMVC.Models;
 
 namespace ProjectSemantic3WebMVC.Controllers
@@ -13,7 +15,7 @@ namespace ProjectSemantic3WebMVC.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Results(string input)
+        public async Task<IActionResult> Results(string input, bool[] filters)
         {
             List<PersonModel> models = null; // Загородній Юрій Іванович
 
@@ -24,10 +26,8 @@ namespace ProjectSemantic3WebMVC.Controllers
 
             await Task.Run(() =>
             {
-                //DBPediaPersonQueries.GetPersonByName(input, out var m);
-                // models = Queries.GetAll();
-                models = OpenLinkedDataLibrary.Wikidata.WikidataPersonQueries.GetAll();
-                
+                QueryHelper.GetPersonByName(input, filters, out var m);
+                models = m;
             });
 
             if (models.Count > MAX_SEARCH_RESULTS)
@@ -43,10 +43,10 @@ namespace ProjectSemantic3WebMVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult StartSearching(SearchModel sm)
+        public IActionResult StartSearching(SearchModel sm, List<string> selectedFilters)
         {
             string i = sm.Input;
-            return RedirectToAction("Results", "Search", new { input = i });
+            return RedirectToAction("Results", "Search", new { input = i, filters = FilterList.StringArrayToLogicalArray(selectedFilters) });
         }
 
         private static string TruncateAndAddEllipsis(string inputString, int maxLength)
