@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using OpenLinkedDataLibrary;
 using OpenLinkedDataLibrary.DBPedia;
 using OpenLinkedDataLibrary.Filter;
@@ -8,7 +9,7 @@ namespace ProjectSemantic3WebMVC.Controllers
 {
     public class SearchController : Controller
     {
-        private const int MAX_SEARCH_RESULTS = 5;
+        private const int MAX_SEARCH_RESULTS = 15;
 
         public IActionResult Index()
         {
@@ -19,16 +20,27 @@ namespace ProjectSemantic3WebMVC.Controllers
         {
             List<PersonModel> models = null; // Загородній Юрій Іванович
 
-            if (string.IsNullOrEmpty(input))
-            {
-                return RedirectToAction("Index", "Search");
-            }
-
             await Task.Run(() =>
             {
-                //QueryHelper.GetPersonByName(input, filters, out var m);
-                models = QueryHelper.GetAll(filters);
-                
+                if (!string.IsNullOrEmpty(input))
+                {
+                    QueryHelper.GetPersonByName(input, filters, out var m);
+
+                    if (m.Count == 0)
+                    {
+                        var all = QueryHelper.GetAll(filters);
+                        models = all.Where(x => JsonConvert.SerializeObject(x).ToLower().Contains(input.ToLower())).ToList();
+                    }
+                    else
+                    {
+                        models = m;
+                    }
+                }
+                else
+                {
+                    models = QueryHelper.GetAll(filters);
+                }
+
             });
 
             if (models.Count > MAX_SEARCH_RESULTS)
