@@ -20,8 +20,6 @@ namespace OpenLinkedDataLibrary.DBPedia
         public string Img { get; set; }
         public string NominatedFor { get; set; }
         public string NotableWork { get; set; }
-        public string AcademicThesis { get; set; }
-        public string OwnerOf { get; set; }
         public string MemberOf { get; set; }
         public string PositionHeld { get; set; }
         public string ParticipantIn { get; set; }

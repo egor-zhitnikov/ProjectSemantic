@@ -26,8 +26,9 @@ namespace ProjectSemantic3WebMVC.Controllers
 
             await Task.Run(() =>
             {
-                QueryHelper.GetPersonByName(input, filters, out var m);
-                models = m;
+                //QueryHelper.GetPersonByName(input, filters, out var m);
+                models = QueryHelper.GetAll(filters);
+                
             });
 
             if (models.Count > MAX_SEARCH_RESULTS)
@@ -38,7 +39,6 @@ namespace ProjectSemantic3WebMVC.Controllers
             {
                 return RedirectToAction("Index", "Person", models[0]);
             }
-
             return View(models);
         }
 

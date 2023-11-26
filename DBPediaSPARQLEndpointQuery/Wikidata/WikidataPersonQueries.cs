@@ -14,6 +14,10 @@ namespace OpenLinkedDataLibrary.Wikidata
         public static List<PersonModel> GetAll()
         {
             var result = new List<PersonModel>();
+            if (personList.Count != 0) 
+            {
+                return personList;
+            }
             var endpoint = new CustomSparqlEndPoint(new Uri("https://query.wikidata.org/sparql"));
             string sparqlQuery =
                 @"SELECT 
@@ -95,9 +99,8 @@ namespace OpenLinkedDataLibrary.Wikidata
             {
                 result.Add(FromRDFToPersonModel(item));
             }
+            personList = result;
             return result;
-
-            return null;
         }
 
         public static SearchStatusEnum GetPersonByName(string name, out List<PersonModel> model)
@@ -138,13 +141,6 @@ namespace OpenLinkedDataLibrary.Wikidata
             model.NotableWork = DBPediaPersonQueries.ConcatStrings(DBPediaPersonQueries.GetUniqueStrings(person[9]));
             model.NominatedFor = DBPediaPersonQueries.ConcatStrings(DBPediaPersonQueries.GetUniqueStrings(person[10]));
             return model;
-        }
-
-
-
-        public static List<PersonModel> GetPersonByName()
-        {
-            return null;
         }
     }
 

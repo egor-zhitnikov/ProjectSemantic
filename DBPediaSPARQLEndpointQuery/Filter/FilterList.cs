@@ -5,7 +5,7 @@
         public static readonly string[] AvailableFilters = new string[]
         {
             "Wikidata замість DbPedia",
-            "Тільки з нагородами",
+            "Award",
             "Тільки номінанти",
             "Тільки NotableWork",
             "Тільки MemberOf",

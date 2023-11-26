@@ -156,27 +156,7 @@ section {
                     <p>@Model.KnownFor</p>
                 </div>
                 </div>
-            }
-
-            @if (DataValidationHelper.IsValid(Model.OwnerOf))
-            {
-                <div class="col-lg-12 mb-4 mb-sm-5">
-                    <div>
-                        <span class="section-title text-primary mb-3 mb-sm-4">ВЛАСНИК</span>
-                        <p>@Model.OwnerOf</p>
-                    </div>
-                </div>
-            }
-
-            @if (DataValidationHelper.IsValid(Model.AcademicThesis))
-            {
-                <div class="col-lg-12 mb-4 mb-sm-5">
-                    <div>
-                        <span class="section-title text-primary mb-3 mb-sm-4">АКАДЕМІЧНІ ТЕЗИ</span>
-                        <p>@Model.AcademicThesis</p>
-                    </div>
-                </div>
-            }
+            }        
 
             @if (DataValidationHelper.IsValid(Model.NominatedFor))
             {

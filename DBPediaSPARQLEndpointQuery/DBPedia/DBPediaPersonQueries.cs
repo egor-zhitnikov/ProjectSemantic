@@ -9,7 +9,11 @@ namespace OpenLinkedDataLibrary.DBPedia
     {
         public static List<PersonModel> personList = new List<PersonModel>();
         public static List<PersonModel> GetAll()
-        {          
+        {
+            if (personList.Count != 0)
+            {
+                return personList;
+            }
             var result = new List<PersonModel>();
             var dataset = SendQuery(
                 "SELECT DISTINCT ?name ?img ?birthDate GROUP_CONCAT((?birthPlace); SEPARATOR=\"+\")  AS ?birthPlace     GROUP_CONCAT((?occupationName); SEPARATOR=\"+\")  AS ?occupation ?abstract GROUP_CONCAT((?awardName ); SEPARATOR=\"+\") AS ?award   GROUP_CONCAT((?officeName); SEPARATOR=\"+\") AS ?office  GROUP_CONCAT((?knownForName); SEPARATOR=\"+\") AS ?knownFor\r\nWHERE\r\n{\r\n?n a dbo:Person.\r\n?n dbo:thumbnail ?img.\r\n    ?n dbo:almaMater dbr:Taras_Shevchenko_National_University_of_Kyiv.\r\n    ?n rdfs:label ?name.\r\n\tFILTER langMatches( lang(?name), \"uk\" )\r\n    ?n dbo:abstract ?abstract.\r\n\tFILTER langMatches( lang(?abstract), \"uk\" )\r\n\t?n dbo:birthDate ?birthDate.\r\n\t?n dbo:birthPlace ?birthP.\r\n\t?birthP rdfs:label ?birthPlace.\r\n\tFILTER langMatches( lang(?birthPlace), \"uk\" ) \r\n\r\n OPTIONAL\r\n  {\r\n  ?n dbo:academicDiscipline ?academicDiscipline.\r\n  ?academicDiscipline rdfs:label ?academicDisciplineName.\r\n  FILTER langMatches( lang(?academicDisciplineName), \"uk\" )\r\n  }.\r\n   \r\nOPTIONAL{\r\n?n dbo:award ?award.\r\n?award rdfs:label ?awardName.\r\nFILTER langMatches( lang(?awardName), \"uk\" )\r\n}.\r\nOPTIONAL\r\n{\r\n?n dbp:office ?office.\r\n?office rdfs:label ?officeName.\r\nFILTER langMatches( lang(?officeName), \"uk\" )\r\n}.\r\nOPTIONAL\r\n{\r\n?n dbp:knownFor ?knownFor.\r\n?knownFor rdfs:label ?knownForName.\r\nFILTER langMatches( lang(?knownForName), \"uk\" )\r\n}.\r\n}"
@@ -18,6 +22,7 @@ namespace OpenLinkedDataLibrary.DBPedia
             {
                 result.Add(FromRDFToPersonModel(item));
             }
+            personList = result;
             return result;
         }
 
@@ -39,8 +44,6 @@ namespace OpenLinkedDataLibrary.DBPedia
         {
             if (query.Length == 0)
                 throw new ArgumentException("Query string can't be empty.");
-            else if (query == null)
-                return null;
             var result = new SparqlResultSet();
             try
             {
@@ -63,6 +66,8 @@ namespace OpenLinkedDataLibrary.DBPedia
 
         public static string ConcatStrings(List<string> list)
         {
+            if (list.Count == 0)
+                return string.Empty;
             string info = string.Empty;
             if (list.Count == 1)
                 return info += list[0];
