@@ -9,7 +9,7 @@ namespace ProjectSemantic3WebMVC.Controllers
 {
     public class SearchController : Controller
     {
-        private const int MAX_SEARCH_RESULTS = 15;
+        private const int MAX_SEARCH_RESULTS = 50;
 
         public IActionResult Index()
         {
@@ -18,7 +18,7 @@ namespace ProjectSemantic3WebMVC.Controllers
 
         public async Task<IActionResult> Results(string input, bool[] filters)
         {
-            List<PersonModel> models = null; // Загородній Юрій Іванович
+            List<PersonModel> models = null; 
 
             await Task.Run(() =>
             {
@@ -43,14 +43,7 @@ namespace ProjectSemantic3WebMVC.Controllers
 
             });
 
-            if (models.Count > MAX_SEARCH_RESULTS)
-            {
-                models.RemoveRange(MAX_SEARCH_RESULTS, models.Count - MAX_SEARCH_RESULTS);
-            }
-            else if (models.Count == 1)
-            {
-                return RedirectToAction("Index", "Person", models[0]);
-            }
+
             return View(models);
         }
 

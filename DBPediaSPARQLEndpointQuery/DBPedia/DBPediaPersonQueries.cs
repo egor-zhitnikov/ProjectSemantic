@@ -59,6 +59,7 @@ namespace OpenLinkedDataLibrary.DBPedia
 
         public static List<string> GetUniqueStrings(string info)
         {
+            if (info == "") return new List<string>();
             var input = info.Split('+').ToList();
             List<string> uniqueList = input.Distinct().ToList();
             return uniqueList;
@@ -66,6 +67,7 @@ namespace OpenLinkedDataLibrary.DBPedia
 
         public static string ConcatStrings(List<string> list)
         {
+        
             if (list.Count == 0)
                 return string.Empty;
             string info = string.Empty;

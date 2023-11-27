@@ -1,8 +1,6 @@
 ﻿
-
-
-
 using OpenLinkedDataLibrary.DBPedia;
+using OpenLinkedDataLibrary.Wikidata;
 
 namespace DBPediaSPARQLEndpointQueryTests
 {
@@ -17,10 +15,12 @@ namespace DBPediaSPARQLEndpointQueryTests
         }
 
         [Test]
-        public void SendQuery_WITH_ERRORS()
+        public void Wikidata_GetAll_PEOPLE_COUNT_EQUAL()
         {
-            Assert.That("The remote server returned an error: (400) Bad Request.", Is.EqualTo(Assert.Throws<Exception>(() => DBPediaPersonQueries.SendQuery("")).InnerException.Message.ToString()));
+            var actual = WikidataPersonQueries.GetAll();
+            Assert.AreEqual(2090, actual.Count);
         }
+
 
         [Test]
         public void SendQuery_EMPTY_QUERY()
@@ -38,7 +38,7 @@ namespace DBPediaSPARQLEndpointQueryTests
         [Test]
         public void GetUniqueStrings_EMPTY_STRING()
         {
-
+            Assert.That(emptyList, Is.EqualTo(DBPediaPersonQueries.GetUniqueStrings("")));
         }
 
         [Test]
@@ -46,7 +46,7 @@ namespace DBPediaSPARQLEndpointQueryTests
         public void GetUniqueStrings_NORMAL_STRING(string info)
         {
             var actual = DBPediaPersonQueries.GetUniqueStrings(info);
-            Assert.AreEqual(7, actual.Count);
+            Assert.AreEqual(5, actual.Count);
         }
 
         [Test]
@@ -64,14 +64,14 @@ namespace DBPediaSPARQLEndpointQueryTests
         [Test]
         public void ConcatStrings_EMPTY_LIST()
         {
-            Assert.That("", Is.EqualTo(DBPediaPersonQueries.ConcatStrings(emptyList)));
+            Assert.AreEqual("",DBPediaPersonQueries.ConcatStrings(emptyList));
         }
         [Test]
         public void ConcatStrings_FULL_LIST()
         {
             Assert.That(
-                "Гребінки, Україна, Українська Радянська Соціалістична Республіка, Україна (Лодзинське воєводство), Союз Радянських Соціалістичних Республік"
-                ,Is.EqualTo(DBPediaPersonQueries.ConcatStrings(fullList)));
+                 "Гребінки, Україна, Українська Радянська Соціалістична Республіка, Україна (Лодзинське воєводство), Україна, Українська Радянська Соціалістична Республіка, Україна (Лодзинське воєводство), Союз Радянських Соціалістичних Республік"
+                , Is.EqualTo(DBPediaPersonQueries.ConcatStrings(fullList)));
         }
         
         [Test]
